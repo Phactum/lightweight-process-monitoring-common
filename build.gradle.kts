@@ -175,7 +175,7 @@ uploadArchives {
 // ------------------------------------
 // PUBLISHING TO SONATYPE CONFIGURATION
 // ------------------------------------
-object Meta {
+object PublishMetaData {
     val COMPONENT_TYPE = "java" // "java" or "versionCatalog"
     val GROUP = project.group.toString()
     val ARTIFACT_ID = project.name
@@ -198,11 +198,11 @@ val sonatypePassword: String? by project // this is defined in ~/.gradle/gradle.
 
 sonatypeCentralPublishExtension {
     // Set group ID, artifact ID, version, and other publication details
-    groupId.set(Meta.GROUP)
-    artifactId.set(Meta.ARTIFACT_ID)
-    version.set(Meta.VERSION)
-    componentType.set(Meta.COMPONENT_TYPE) // "java" or "versionCatalog"
-    publishingType.set(Meta.PUBLISHING_TYPE) // USER_MANAGED or AUTOMATIC
+    groupId.set(PublishMetaData.GROUP)
+    artifactId.set(PublishMetaData.ARTIFACT_ID)
+    version.set(PublishMetaData.VERSION)
+    componentType.set(PublishMetaData.COMPONENT_TYPE) // "java" or "versionCatalog"
+    publishingType.set(PublishMetaData.PUBLISHING_TYPE) // USER_MANAGED or AUTOMATIC
 
     // Set username and password for Sonatype repository
     username.set(System.getenv("SONATYPE_USERNAME") ?: sonatypeUsername)
@@ -210,31 +210,31 @@ sonatypeCentralPublishExtension {
 
     // Configure POM metadata
     pom {
-        name.set(Meta.ARTIFACT_ID)
-        description.set(Meta.DESC)
-        url.set(Meta.URL)
+        name.set(PublishMetaData.ARTIFACT_ID)
+        description.set(PublishMetaData.DESC)
+        url.set(PublishMetaData.URL)
         licenses {
             license {
-                name.set(Meta.LICENSE)
-                url.set(Meta.LICENSE_URL)
+                name.set(PublishMetaData.LICENSE)
+                url.set(PublishMetaData.LICENSE_URL)
             }
         }
         developers {
             developer {
-                id.set(Meta.DEVELOPER_ID)
-                name.set(Meta.DEVELOPER_NAME)
-                organization.set(Meta.DEVELOPER_ORGANIZATION)
-                organizationUrl.set(Meta.DEVELOPER_ORGANIZATION_URL)
+                id.set(PublishMetaData.DEVELOPER_ID)
+                name.set(PublishMetaData.DEVELOPER_NAME)
+                organization.set(PublishMetaData.DEVELOPER_ORGANIZATION)
+                organizationUrl.set(PublishMetaData.DEVELOPER_ORGANIZATION_URL)
             }
         }
         scm {
-            url.set("https://github.com/${Meta.GITHUB_REPO}")
-            connection.set("scm:git:https://github.com/${Meta.GITHUB_REPO}")
-            developerConnection.set("scm:git:https://github.com/${Meta.GITHUB_REPO}")
+            url.set("https://github.com/${PublishMetaData.GITHUB_REPO}")
+            connection.set("scm:git:https://github.com/${PublishMetaData.GITHUB_REPO}")
+            developerConnection.set("scm:git:https://github.com/${PublishMetaData.GITHUB_REPO}")
         }
         issueManagement {
             system.set("GitHub")
-            url.set("https://github.com/${Meta.GITHUB_REPO}/issues")
+            url.set("https://github.com/${PublishMetaData.GITHUB_REPO}/issues")
         }
     }
 }
