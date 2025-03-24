@@ -172,69 +172,49 @@ uploadArchives {
 }
 */
 
-// ------------------------------------
-// PUBLISHING TO SONATYPE CONFIGURATION
-// ------------------------------------
-object PublishMetaData {
-    val COMPONENT_TYPE = "java" // "java" or "versionCatalog"
-    val GROUP = project.group.toString()
-    val ARTIFACT_ID = project.name
-    val VERSION = project.version.toString()
-    val URL = "https://github.com/Phactum/lightweight-process-monitoring-common.git"
-    val PUBLISHING_TYPE = "USER_MANAGED" // USER_MANAGED or AUTOMATIC
-    val SHA_ALGORITHMS = listOf("SHA-256", "SHA-512") // sha256 and sha512 are supported but not mandatory. Only sha1 is mandatory but it is supported by default.
-    val DESC = "Test deployment only"
-    val LICENSE = "MIT"
-    val LICENSE_URL = "https://opensource.org/licenses/MIT"
-    val GITHUB_REPO = "Phactum/lightweight-process-monitoring-common.git"
-    val DEVELOPER_ID = "phactum-developer"
-    val DEVELOPER_NAME = "Phactum Developer"
-    val DEVELOPER_ORGANIZATION = "Phactum Softwareentwicklung GmbH"
-    val DEVELOPER_ORGANIZATION_URL = "https://www.phactum.at/"
-}
-
-val sonatypeUsername: String? by project // this is defined in ~/.gradle/gradle.properties
-val sonatypePassword: String? by project // this is defined in ~/.gradle/gradle.properties
-
+// ----------------------
+// PUBLISHING TO SONATYPE
+// ----------------------
+// eu.kakde.gradle.sonatype-maven-central-publisher
 sonatypeCentralPublishExtension {
     // Set group ID, artifact ID, version, and other publication details
-    groupId.set(PublishMetaData.GROUP)
-    artifactId.set(PublishMetaData.ARTIFACT_ID)
-    version.set(PublishMetaData.VERSION)
-    componentType.set(PublishMetaData.COMPONENT_TYPE) // "java" or "versionCatalog"
-    publishingType.set(PublishMetaData.PUBLISHING_TYPE) // USER_MANAGED or AUTOMATIC
+    groupId.set(project.group.toString())
+    artifactId.set(project.name)
+    version.set(project.version.toString())
+    componentType.set("java") // "java" or "versionCatalog"
+    publishingType.set("USER_MANAGED") // USER_MANAGED or AUTOMATIC
 
     // Set username and password for Sonatype repository
-    username.set(System.getenv("SONATYPE_USERNAME") ?: sonatypeUsername)
-    password.set(System.getenv("SONATYPE_PASSWORD") ?: sonatypePassword)
+    username.set(System.getenv("SONATYPE_USERNAME") ?: project.properties["sonatypeUsername"].toString())
+    password.set(System.getenv("SONATYPE_PASSWORD") ?: project.properties["sonatypePassword"].toString())
 
     // Configure POM metadata
     pom {
-        name.set(PublishMetaData.ARTIFACT_ID)
-        description.set(PublishMetaData.DESC)
-        url.set(PublishMetaData.URL)
+        name.set(project.name)
+        description.set("Support artifact for the lightweight library for process monitoring.")
+        url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
         licenses {
             license {
-                name.set(PublishMetaData.LICENSE)
-                url.set(PublishMetaData.LICENSE_URL)
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
             }
         }
         developers {
             developer {
-                id.set(PublishMetaData.DEVELOPER_ID)
-                name.set(PublishMetaData.DEVELOPER_NAME)
-                organization.set(PublishMetaData.DEVELOPER_ORGANIZATION)
-                organizationUrl.set(PublishMetaData.DEVELOPER_ORGANIZATION_URL)
+                id.set("phactum-developer")
+                name.set("Phactum Developer")
+                organization.set("Phactum Softwareentwicklung GmbH")
+                organizationUrl.set("https://www.phactum.at/")
             }
         }
         scm {
-            url.set("https://github.com/${PublishMetaData.GITHUB_REPO}")
-            connection.set("scm:git:https://github.com/${PublishMetaData.GITHUB_REPO}")
-            developerConnection.set("scm:git:https://github.com/${PublishMetaData.GITHUB_REPO}")
+            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
+            connection.set("scm:git:https://github.com/Phactum/lightweight-process-monitoring-common.git")
+            developerConnection.set("scm:git:https://github.com/Phactum/lightweight-process-monitoring-common.git")
         }
         issueManagement {
             system.set("GitHub")
-            url.set("https://github.com/${PublishMetaData.GITHUB_REPO}/issues")
+            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git/issues")
         }
     }
 }
