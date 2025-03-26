@@ -98,31 +98,6 @@ val pomAction = object : Action<MavenPom> {
     }
 }
 
-// github packages
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = URI("https://maven.pkg.github.com/Phactum/lightweight-process-monitoring-common")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-
-    }
-
-    publications {
-        register("jar", MavenPublication::class) {
-            from(components["java"])
-            //artifact(tasks.named("sourcesJar"))
-            //artifact(tasks.named("javadocJar"))
-            pom(pomAction)
-        }
-    }
-
-}
-
 // ----------------------
 // PUBLISHING TO SONATYPE
 // ----------------------
@@ -140,4 +115,29 @@ sonatypeCentralPublishExtension {
     password.set(System.getenv("SONATYPE_PASSWORD") ?: project.properties["sonatypePassword"].toString())
 
     pom(pomAction)
+}
+
+// github packages
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = URI("https://maven.pkg.github.com/Phactum/lightweight-process-monitoring-common")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+
+    }
+
+    /*publications {
+        register("jar", MavenPublication::class) {
+            from(components["java"])
+            //artifact(tasks.named("sourcesJar"))
+            //artifact(tasks.named("javadocJar"))
+            pom(pomAction)
+        }
+    }*/
+
 }
