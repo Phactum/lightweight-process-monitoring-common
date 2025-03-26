@@ -67,19 +67,39 @@ signing {
     sign(configurations.archives.get())
 }
 
-
-/*
-Repository URL for snapshot deployment and download access:
-
-https://s01.oss.sonatype.org/content/repositories/snapshots/
-Repository URL for release deployment, no download access! :
-
-https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/
-*/
+val pomAction = object : Action<MavenPom> {
+    override fun execute(p0: MavenPom) {
+        p0.name.set(project.name)
+        p0.description.set("Support artifact for the lightweight library for process monitoring.")
+        p0.url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
+        p0.licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        p0.developers {
+            developer {
+                id.set("phactum-developer")
+                name.set("Phactum Developers")
+                organization.set("Phactum Softwareentwicklung GmbH")
+                organizationUrl.set("https://www.phactum.at/")
+            }
+        }
+        p0.scm {
+            connection.set("scm:git:git://github.com/Phactum/lightweight-process-monitoring-common.git")
+            developerConnection.set("scm:git:ssh://git@github.com:Phactum/lightweight-process-monitoring-common.git")
+            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
+        }
+        p0.issueManagement {
+            system.set("GitHub")
+            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git/issues")
+        }
+    }
+}
 
 // github packages
 publishing {
-
     repositories {
         maven {
             name = "GitHubPackages"
@@ -95,82 +115,13 @@ publishing {
     publications {
         register("jar", MavenPublication::class) {
             from(components["java"])
-            artifact(tasks.named("sourcesJar"))
-            artifact(tasks.named("javadocJar"))
-            pom {
-                name.set("Lightweight Process Monitoring Common")
-                description.set("A lightweight library for process monitoring.")
-                url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
-                licenses {
-                    license {
-                        name.set("The MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("phactum")
-                        name.set("Phactum Developers")
-                        email.set("developer@phactum.at")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/Phactum/lightweight-process-monitoring-common.git")
-                    developerConnection.set("scm:git:ssh://git@github.com:Phactum/lightweight-process-monitoring-common.git")
-                    url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
-                }
-            }
+            //artifact(tasks.named("sourcesJar"))
+            //artifact(tasks.named("javadocJar"))
+            pom(pomAction)
         }
     }
 
 }
-/*
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
-            authentication(userName: ossrhUsername, password: ossrhPassword)
-        }
-
-            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-            authentication(userName: ossrhUsername, password: ossrhPassword)
-        }
-
-            pom.project {
-                name 'Example Application'
-                packaging 'jar'
-                // optionally artifactId can be defined here
-                description 'A application used as an example on how to set up
-                pushing  its components to the Central Repository.'
-                url 'http://www.example.com/example-application'
-
-                scm {
-                    connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
-                    developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
-                    url 'http://foo.googlecode.com/svn/trunk/'
-                }
-
-                licenses {
-                    license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'manfred'
-                        name 'Manfred Moser'
-                        email 'manfred@sonatype.com'
-                    }
-                }
-            }
-        }
-    }
-}
-*/
 
 // ----------------------
 // PUBLISHING TO SONATYPE
@@ -188,33 +139,5 @@ sonatypeCentralPublishExtension {
     username.set(System.getenv("SONATYPE_USERNAME") ?: project.properties["sonatypeUsername"].toString())
     password.set(System.getenv("SONATYPE_PASSWORD") ?: project.properties["sonatypePassword"].toString())
 
-    // Configure POM metadata
-    pom {
-        name.set(project.name)
-        description.set("Support artifact for the lightweight library for process monitoring.")
-        url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
-        licenses {
-            license {
-                name.set("MIT")
-                url.set("https://opensource.org/licenses/MIT")
-            }
-        }
-        developers {
-            developer {
-                id.set("phactum-developer")
-                name.set("Phactum Developer")
-                organization.set("Phactum Softwareentwicklung GmbH")
-                organizationUrl.set("https://www.phactum.at/")
-            }
-        }
-        scm {
-            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
-            connection.set("scm:git:https://github.com/Phactum/lightweight-process-monitoring-common.git")
-            developerConnection.set("scm:git:https://github.com/Phactum/lightweight-process-monitoring-common.git")
-        }
-        issueManagement {
-            system.set("GitHub")
-            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git/issues")
-        }
-    }
+    pom(pomAction)
 }
