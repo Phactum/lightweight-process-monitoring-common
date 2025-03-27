@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.phactum.lpm"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -89,11 +89,11 @@ val pomAction = object : Action<MavenPom> {
         p0.scm {
             connection.set("scm:git:git://github.com/Phactum/lightweight-process-monitoring-common.git")
             developerConnection.set("scm:git:ssh://git@github.com:Phactum/lightweight-process-monitoring-common.git")
-            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git")
+            url.set("https://github.com/Phactum/lightweight-process-monitoring-common")
         }
         p0.issueManagement {
             system.set("GitHub")
-            url.set("https://github.com/Phactum/lightweight-process-monitoring-common.git/issues")
+            url.set("https://github.com/Phactum/lightweight-process-monitoring-common/issues")
         }
     }
 }
@@ -128,16 +128,23 @@ publishing {
                 password = System.getenv("GITHUB_TOKEN")
             }
         }
-
+        mavenCentral {
+            name = "SonatypeCentral"
+            url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME") ?: project.properties["sonatypeUsername"].toString()
+                password = System.getenv("SONATYPE_PASSWORD") ?: project.properties["sonatypePassword"].toString()
+            }
+        }
     }
 
-    /*publications {
+    publications {
         register("jar", MavenPublication::class) {
             from(components["java"])
             //artifact(tasks.named("sourcesJar"))
             //artifact(tasks.named("javadocJar"))
             pom(pomAction)
         }
-    }*/
+    }
 
 }
