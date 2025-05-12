@@ -1,5 +1,5 @@
 package com.phactum.lpm.annotation
 
-@Target(AnnotationTarget.CLASS)
+@Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ProcessId
+annotation class BusinessKeyParam

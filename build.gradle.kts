@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.phactum.lpm"
-version = "0.0.2-SNAPSHOT"
+version = "0.8.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
