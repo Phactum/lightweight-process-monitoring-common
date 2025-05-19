@@ -1,5 +1,6 @@
 package com.phactum.lpm.annotation
 
+@Repeatable
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Task(
