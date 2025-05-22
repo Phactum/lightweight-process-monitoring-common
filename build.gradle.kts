@@ -60,13 +60,6 @@ artifacts {
     archives(tasks.named("javadocJar"))
 }
 
-signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(configurations.archives.get())
-}
-
 val pomAction = object : Action<MavenPom> {
     override fun execute(p0: MavenPom) {
         p0.name.set(project.name)
@@ -103,6 +96,11 @@ val pomAction = object : Action<MavenPom> {
 // ----------------------
 // eu.kakde.gradle.sonatype-maven-central-publisher
 sonatypeCentralPublishExtension {
+    signing {
+        val signingKey: String? by project
+        val signingPassword: String? by project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
     // Set group ID, artifact ID, version, and other publication details
     groupId.set(project.group.toString())
     artifactId.set(project.name)
@@ -117,17 +115,8 @@ sonatypeCentralPublishExtension {
     pom(pomAction)
 }
 
-// github packages
 publishing {
     repositories {
-        maven {
-            name = "GitHubPackages"
-            url = URI("https://maven.pkg.github.com/Phactum/lightweight-process-monitoring-common")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
         mavenCentral {
             name = "SonatypeCentral"
             url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
