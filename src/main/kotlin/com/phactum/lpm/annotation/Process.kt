@@ -9,7 +9,8 @@ import kotlin.reflect.KClass
 annotation class Process(
     val startEventId: String,
     val endEventId: String,
-    val processFileName: String = "",
+    val processFileName: String,
+    val useCase: String = "",
     val businessKeyMapper: KClass<out BusinessKeyMapper> = BusinessKeyToStringMapper::class
 )
 
