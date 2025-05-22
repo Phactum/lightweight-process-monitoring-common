@@ -6,7 +6,7 @@ import com.phactum.lpm.model.ProcessState
 class Signal {
     companion object {
         @JvmStatic
-        fun produce(processState: ProcessState, taskIds: List<String>) {
+        fun produce(processState: ProcessState, taskIds: Array<String>) {
             when (processState) {
                 ProcessState.STARTED -> startSignal(processState,taskIds)
                 ProcessState.FINISHED -> finishedSignal(processState,taskIds)
@@ -14,15 +14,15 @@ class Signal {
             }
         }
         @StaticSignal
-        private fun startSignal(processState: ProcessState, taskIds: List<String>){
+        private fun startSignal(processState: ProcessState, taskIds: Array<String>){
 
         }
         @StaticSignal
-        private fun finishedSignal(processState: ProcessState, taskIds: List<String>){
+        private fun finishedSignal(processState: ProcessState, taskIds: Array<String>){
 
         }
         @StaticSignal
-        private fun failedSignal(processState: ProcessState, taskIds: List<String>){
+        private fun failedSignal(processState: ProcessState, taskIds: Array<String>){
 
         }
     }
