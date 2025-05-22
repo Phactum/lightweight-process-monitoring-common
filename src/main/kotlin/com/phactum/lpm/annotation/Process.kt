@@ -8,9 +8,9 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Process(
     val startEventId: String,
-    val endEventId: String,
+    val endEventId: String = "",
     val processFileName: String,
-    val useCase: String = "",
-    val businessKeyMapper: KClass<out BusinessKeyMapper> = BusinessKeyToStringMapper::class
+    val businessKeyMapper: KClass<out BusinessKeyMapper> = BusinessKeyToStringMapper::class,
+    val useCase: String = ""
 )
 
