@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.phactum.lpm"
-version = "0.8.5-SNAPSHOT"
+version = "0.8.5"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -46,7 +46,6 @@ kotlin {
 tasks.register("javadocJar", Jar::class) {
     dependsOn("dokkaHtml") // Generates Javadoc using Dokka
     archiveClassifier.set("javadoc")
-    //from(tasks.named("dokkaHtml").get().outputDirectory)
     from(layout.buildDirectory.dir("dokka"))
 }
 
