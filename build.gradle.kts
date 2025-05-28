@@ -6,17 +6,14 @@ plugins {
     `java-library`
     id("org.jetbrains.dokka") version "1.9.0"
     id("eu.kakde.gradle.sonatype-maven-central-publisher") version "1.0.6" // for sonatype central publishing
-    `maven-publish` // for github-packages
     signing
 }
 
 group = "com.phactum.lpm"
-version = "0.8.6-SNAPSHOT"
+version = "0.8.6"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
-    // withSourcesJar()
-    // withJavadocJar()
 }
 
 repositories {
