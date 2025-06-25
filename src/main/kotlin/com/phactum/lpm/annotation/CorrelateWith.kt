@@ -8,7 +8,7 @@ package com.phactum.lpm.annotation
 )
 @Retention(AnnotationRetention.RUNTIME)
 @Repeatable
-annotation class CorrelateWith(
+annotation class ProcessContext(
     val from: String,
     val label: String = "",
 )
