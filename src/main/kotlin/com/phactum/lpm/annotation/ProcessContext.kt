@@ -11,4 +11,5 @@ package com.phactum.lpm.annotation
 annotation class ProcessContext(
     val from: String,
     val label: String = "",
+    val addToMdc: Boolean = true,
 )
